@@ -69,7 +69,7 @@ export default function Home() {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://github.com/mersadhabibi/nextjs15-reactquery"
+                href="https://github.com/MersadHabibi/nextjs-starter-template"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-xl">
@@ -80,7 +80,7 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    "git clone https://github.com/mersadhabibi/nextjs15-reactquery.git",
+                    "git clone https://github.com/MersadHabibi/nextjs-starter-template.git",
                   );
                 }}
                 className="rounded-full border border-gray-200 bg-white px-8 py-3 text-sm font-semibold text-gray-900 shadow-lg transition-all hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white">

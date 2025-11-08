@@ -38,7 +38,6 @@
 ### 🎭 UI & Animations
 
 - ✨ **Framer Motion** - انیمیشن‌های حرفه‌ای
-- 🎨 **React Aria Components** - کامپوننت‌های Accessible
 - 🖼️ **Lucide React** - آیکون‌های زیبا و سبک
 - 🎪 **Swiper & Embla Carousel** - اسلایدرهای حرفه‌ای
 
@@ -53,6 +52,13 @@
 - 💅 **Prettier** - فرمت‌دهی خودکار کد
 - 🐋 **Docker** - آماده برای Deploy
 
+### 📚 Storybook
+
+- 📖 **Storybook v10** - مستندسازی و توسعه کامپوننت‌ها
+- 🧩 **2 کامپوننت آماده** (در حال توسعه و افزایش)
+- ♿ **Accessibility Testing** - با addon-a11y
+- 🧪 **Vitest Integration** - تست کامپوننت‌ها در Storybook
+
 ### 🔒 Security & Utils
 
 - 🔐 **Jose** - JWT و رمزنگاری
@@ -66,10 +72,10 @@
 
 ```bash
 # Clone کردن پروژه
-git clone https://github.com/mersadhabibi/nextjs15-reactquery.git
+git clone https://github.com/mersadhabibi/nextjs-starter-template.git
 
 # ورود به پوشه پروژه
-cd nextjs15-reactquery
+cd nextjs-starter-template
 
 # نصب وابستگی‌ها
 pnpm install
@@ -93,16 +99,62 @@ pnpm start
 
 # Lint و بررسی کد
 pnpm lint
+
+# اجرای Storybook
+pnpm storybook
+
+# Build کردن Storybook
+pnpm build-storybook
 ```
 
-پروژه روی [http://localhost:3000](http://localhost:3000) اجرا می‌شود.
+- پروژه روی [http://localhost:3000](http://localhost:3000) اجرا می‌شود
+- Storybook روی [http://localhost:6006](http://localhost:6006) اجرا می‌شود
+
+---
+
+## 📚 Storybook
+
+این پروژه از **Storybook v10** برای مستندسازی و توسعه کامپوننت‌ها استفاده می‌کند.
+
+### 🚀 اجرای Storybook
+
+```bash
+pnpm storybook
+```
+
+Storybook روی [http://localhost:6006](http://localhost:6006) اجرا می‌شود.
+
+### ✨ ویژگی‌های Storybook این پروژه
+
+- ✅ **Accessibility Testing** - بررسی خودکار دسترسی‌پذیری
+- ✅ **Vitest Integration** - تست کامپوننت‌ها
+- ✅ **Auto Docs** - مستندسازی خودکار
+- ✅ **Interactive Testing** - تست تعاملی کامپوننت‌ها
+- ✅ **Dark Mode Support** - پشتیبانی از حالت تاریک
+
+### 🧩 کامپوننت‌های آماده
+
+در حال حاضر **2 کامپوننت** آماده و مستندسازی شده است:
+
+1. **Button** - دکمه با variants مختلف
+2. **Input** - فیلد ورودی با حالت‌های مختلف
+
+> 🚧 **در حال توسعه:** کامپوننت‌های بیشتری به زودی اضافه می‌شوند!
+
+### 📦 Addons نصب شده
+
+- `@storybook/addon-a11y` - تست دسترسی‌پذیری
+- `@storybook/addon-docs` - مستندسازی خودکار
+- `@storybook/addon-interactions` - تست تعاملی
+- `@storybook/addon-vitest` - اجرای تست‌ها
+- `@storybook/addon-console` - لاگ‌های کنسول
 
 ---
 
 ## 📁 ساختار پروژه
 
 ```
-nextjs15-reactquery/
+nextjs-starter-template/
 ├── src/
 │   ├── app/                    # App Router (Next.js 13+)
 │   │   ├── layout.tsx          # Layout اصلی
@@ -122,7 +174,6 @@ nextjs15-reactquery/
 │   ├── hooks/                  # Custom Hooks
 │   ├── lib/                    # توابع کمکی
 │   ├── types/                  # TypeScript Types
-│   ├── permissions/            # مدیریت دسترسی‌ها
 │   └── providers/              # React Providers
 ├── public/                     # فایل‌های Static
 │   ├── fonts/                  # فونت ایران یکان
@@ -137,61 +188,11 @@ nextjs15-reactquery/
 
 ## 🎨 تنظیمات Tailwind CSS
 
-این پروژه از **Tailwind CSS v4** با افزونه‌های زیر استفاده می‌کند:
-
-- `tailwindcss-react-aria-components` - استایل‌دهی به React Aria
-- `tailwindcss-animate` - انیمیشن‌های آماده
-- `tailwind-merge` - ادغام کلاس‌ها
-
 ### 🎨 سیستم رنگ‌بندی سفارشی
 
 پروژه دارای یک سیستم رنگ‌بندی حرفه‌ای با پشتیبانی کامل از **Dark Mode** است.
 
-> **نکته:** صفحه اصلی از رنگ‌های پیش‌فرض Tailwind با `dark:` prefix استفاده می‌کند، اما تمام Variable های رنگی برای استفاده در پروژه شما آماده و کانفیگ شده‌اند.
-
-#### رنگ‌های آماده (Variable ها):
-
-```tsx
-// پس‌زمینه‌ها
-bg - background; // پس‌زمینه اصلی
-bg - surface; // پس‌زمینه کارت‌ها
-
-// رنگ‌های برند
-bg - primary; // آبی (اصلی)
-bg - secondary; // بنفش
-bg - accent; // صورتی
-
-// متن
-text - text - primary; // متن اصلی
-text - text - secondary; // متن فرعی
-text - text - tertiary; // متن کم‌رنگ
-
-// خطوط
-border - border; // خطوط و حاشیه‌ها
-```
-
-#### مثال استفاده:
-
-```tsx
-<button className="bg-primary text-text-inverse px-4 py-2 rounded-lg">
-  دکمه اصلی
-</button>
-
-<div className="bg-surface border border-border rounded-xl p-6">
-  <h3 className="text-text-primary">عنوان</h3>
-  <p className="text-text-secondary">توضیحات</p>
-</div>
-```
-
 **💡 مزیت اصلی:** همه رنگ‌ها به صورت خودکار در Dark Mode تغییر می‌کنند!
-
-```tsx
-// قبل - باید برای هر رنگ dark: بنویسید
-<div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-
-// بعد - یک کلاس برای هر دو حالت
-<div className="bg-surface text-text-primary">
-```
 
 📖 **راهنمای کامل:** [COLOR_USAGE_EXAMPLES.md](./src/styles/COLOR_USAGE_EXAMPLES.md)
 
@@ -257,8 +258,6 @@ function ThemeToggle() {
 }
 ```
 
----
-
 ## 📝 فرم‌ها و Validation
 
 مثال استفاده از React Hook Form + Zod:
@@ -313,45 +312,88 @@ docker run -p 3000:3000 nextjs-app
 
 ---
 
-## 📦 لیست کامل پکیج‌ها
+## 📦 لیست کامل پکیج‌ها (58 پکیج)
 
-### Dependencies (27 پکیج)
-
-| پکیج                     | نسخه     | دسته‌بندی        |
-| ------------------------ | -------- | ---------------- |
-| next                     | 16.0.1   | Core             |
-| react                    | 19.2.0   | Core             |
-| @tanstack/react-query    | ^5.66.0  | State Management |
-| axios                    | ^1.9.0   | Network          |
-| zustand                  | ^5.0.3   | State Management |
-| react-hook-form          | ^7.54.2  | Forms            |
-| zod                      | ^3.24.1  | Validation       |
-| framer-motion            | ^12.4.3  | Animation        |
-| tailwindcss              | ^4       | Styling          |
-| next-themes              | ^0.4.6   | UI               |
-| lucide-react             | ^0.474.0 | Icons            |
-| react-aria-components    | ^1.6.0   | UI Components    |
-| moment-jalaali           | ^0.10.4  | Date (Persian)   |
-| react-multi-date-picker  | ^4.5.2   | Date Picker      |
-| jose                     | ^5.9.6   | Security (JWT)   |
-| crypto-js                | ^4.2.0   | Security         |
-| js-cookie                | ^3.0.5   | Utils            |
-| react-hot-toast          | ^2.5.1   | Notifications    |
-| react-dropzone           | ^14.3.5  | File Upload      |
-| swiper                   | ^11.2.10 | Carousel         |
-| embla-carousel-react     | ^8.5.2   | Carousel         |
-| react-quill              | ^2.0.0   | Rich Text Editor |
-| react-color              | ^2.19.3  | Color Picker     |
-| class-variance-authority | ^0.7.1   | Utils            |
-| clsx                     | ^2.1.1   | Utils            |
-| tailwind-merge           | ^3.0.1   | Utils            |
-| usehooks-ts              | ^3.1.0   | Hooks            |
-
-### Dev Dependencies (12 پکیج)
-
-- TypeScript, ESLint, Prettier
-- Tailwind CSS Plugins
-- Type Definitions
+| پکیج                           | نسخه     | دسته‌بندی        | نوع           |
+| ------------------------------ | -------- | ---------------- | ------------- |
+| **CORE & FRAMEWORK**           |          |                  |               |
+| next                           | 16.0.1   | Core             | dependency    |
+| react                          | 19.2.0   | Core             | dependency    |
+| react-dom                      | 19.2.0   | Core             | dependency    |
+| typescript                     | ^5       | Core             | devDependency |
+| **STATE MANAGEMENT**           |          |                  |               |
+| @tanstack/react-query          | ^5.66.0  | State Management | dependency    |
+| @tanstack/react-query-devtools | ^5.66.0  | State Management | devDependency |
+| @tanstack/eslint-plugin-query  | ^5.66.0  | State Management | devDependency |
+| zustand                        | ^5.0.3   | State Management | dependency    |
+| **NETWORKING**                 |          |                  |               |
+| axios                          | ^1.9.0   | Network          | dependency    |
+| **FORMS & VALIDATION**         |          |                  |               |
+| react-hook-form                | ^7.54.2  | Forms            | dependency    |
+| @hookform/resolvers            | ^3.10.0  | Forms            | dependency    |
+| zod                            | ^3.24.1  | Validation       | dependency    |
+| **STYLING & ANIMATION**        |          |                  |               |
+| tailwindcss                    | ^4       | Styling          | devDependency |
+| @tailwindcss/postcss           | ^4       | Styling          | devDependency |
+| postcss                        | ^8       | Styling          | devDependency |
+| prettier                       | ^3.4.2   | Styling          | devDependency |
+| prettier-plugin-tailwindcss    | ^0.6.11  | Styling          | devDependency |
+| framer-motion                  | ^12.4.3  | Animation        | dependency    |
+| **UI COMPONENTS & THEMES**     |          |                  |               |
+| next-themes                    | ^0.4.6   | UI               | dependency    |
+| lucide-react                   | ^0.474.0 | Icons            | dependency    |
+| sonner                         | ^2.0.7   | Notifications    | dependency    |
+| react-dropzone                 | ^14.3.5  | File Upload      | dependency    |
+| react-color                    | ^2.19.3  | Color Picker     | dependency    |
+| react-circular-progressbar     | ^2.2.0   | Progress         | dependency    |
+| swiper                         | ^11.2.10 | Carousel         | dependency    |
+| embla-carousel-react           | ^8.5.2   | Carousel         | dependency    |
+| **DATE & TIME**                |          |                  |               |
+| moment-jalaali                 | ^0.10.4  | Date (Persian)   | dependency    |
+| react-multi-date-picker        | ^4.5.2   | Date Picker      | dependency    |
+| **SECURITY**                   |          |                  |               |
+| jose                           | ^5.9.6   | Security (JWT)   | dependency    |
+| **UTILITIES**                  |          |                  |               |
+| clsx                           | ^2.1.1   | Utils            | dependency    |
+| tailwind-merge                 | ^3.0.1   | Utils            | dependency    |
+| usehooks-ts                    | ^3.1.0   | Hooks            | dependency    |
+| uuid                           | ^11.0.5  | Utils            | dependency    |
+| js-cookie                      | ^3.0.5   | Utils            | dependency    |
+| sharp                          | ^0.33.5  | Image Processing | dependency    |
+| **LINTING & FORMATTING**       |          |                  |               |
+| eslint                         | ^9       | Linting          | devDependency |
+| eslint-config-next             | 16.0.1   | Linting          | devDependency |
+| eslint-plugin-storybook        | 10.0.5   | Linting          | devDependency |
+| @eslint/eslintrc               | ^3       | Linting          | devDependency |
+| **TESTING**                    |          |                  |               |
+| vitest                         | ^4.0.7   | Testing          | devDependency |
+| @vitest/browser-playwright     | ^4.0.7   | Testing          | devDependency |
+| @vitest/coverage-v8            | ^4.0.7   | Testing          | devDependency |
+| playwright                     | ^1.56.1  | Testing          | devDependency |
+| **STORYBOOK**                  |          |                  |               |
+| storybook                      | 10.0.5   | Storybook        | devDependency |
+| @storybook/nextjs-vite         | ^10.0.5  | Storybook        | devDependency |
+| @storybook/react               | ^10.0.5  | Storybook        | devDependency |
+| @storybook/addon-a11y          | 10.0.5   | Storybook Addon  | devDependency |
+| @storybook/addon-docs          | 10.0.5   | Storybook Addon  | devDependency |
+| @storybook/addon-onboarding    | 10.0.5   | Storybook Addon  | devDependency |
+| @storybook/addon-vitest        | 10.0.5   | Storybook Addon  | devDependency |
+| @storybook/addon-console       | ^3.0.0   | Storybook Addon  | devDependency |
+| @storybook/addon-interactions  | ^8.6.14  | Storybook Addon  | devDependency |
+| @storybook/components          | ^8.6.14  | Storybook        | devDependency |
+| @storybook/core-events         | ^8.6.14  | Storybook        | devDependency |
+| @storybook/manager-api         | ^8.6.14  | Storybook        | devDependency |
+| @storybook/test                | ^8.6.14  | Storybook        | devDependency |
+| @storybook/theming             | ^8.6.14  | Storybook        | devDependency |
+| @storybook/types               | ^8.6.14  | Storybook        | devDependency |
+| @chromatic-com/storybook       | ^3.2.7   | Storybook        | devDependency |
+| **TYPE DEFINITIONS**           |          |                  |               |
+| @types/node                    | ^20      | Types            | devDependency |
+| @types/react                   | ^19      | Types            | devDependency |
+| @types/react-dom               | ^19      | Types            | devDependency |
+| @types/react-dropzone          | ^5.1.0   | Types            | devDependency |
+| @types/uuid                    | ^10.0.0  | Types            | devDependency |
+| @types/js-cookie               | ^3.0.6   | Types            | devDependency |
 
 ---
 
