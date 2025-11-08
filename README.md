@@ -66,7 +66,7 @@
 
 ```bash
 # Clone کردن پروژه
-git clone https://github.com/yourusername/nextjs15-reactquery.git
+git clone https://github.com/mersadhabibi/nextjs15-reactquery.git
 
 # ورود به پوشه پروژه
 cd nextjs15-reactquery
@@ -379,7 +379,7 @@ docker run -p 3000:3000 nextjs-app
 
 - 🐛 [گزارش باگ](../../issues)
 - 💡 [درخواست ویژگی جدید](../../issues)
-- 📧 ایمیل: your.email@example.com
+- 📧 ایمیل: mersadhabibi.work@gmail.com
 
 ---
 
