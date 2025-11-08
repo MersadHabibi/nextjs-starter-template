@@ -1,3 +1,7 @@
+import "@/app/globals.css";
+import "./storybook-fonts.css";
+import React from "react";
+
 import type { Preview } from "@storybook/nextjs-vite";
 
 const preview: Preview = {
@@ -16,6 +20,13 @@ const preview: Preview = {
       test: "todo",
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="font-iranYekan font-normal" dir="rtl" lang="fa">
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
