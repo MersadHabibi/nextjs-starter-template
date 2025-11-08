@@ -7,11 +7,12 @@ import Providers from "@/providers/providers";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | آذرملک",
-    default: "آذرملک",
+    template: "%s | Next.js Starter Template",
+    default: "Next.js Starter Template",
   },
-  description: "آذرملک",
+  description: "Next.js Starter Template",
 };
+
 
 export default function RootLayout({
   children,
