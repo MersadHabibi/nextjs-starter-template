@@ -53,6 +53,9 @@ importers:
       react-color:
         specifier: ^2.19.3
         version: 2.19.3(react@19.2.0)
+      react-date-object:
+        specifier: ^2.1.9
+        version: 2.1.9
       react-dom:
         specifier: 19.2.0
         version: 19.2.0(react@19.2.0)
