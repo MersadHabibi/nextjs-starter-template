@@ -5,7 +5,7 @@ import Loader from "../loaders/Loader";
 
 export default function Button({
   children,
-  className = "rounded-md text-white font-medium cursor-pointer hover:brightness-90 transition-all inline-flex items-center justify-center gap-x-1.5",
+  className,
   onClick,
   disabled,
   type,
@@ -32,6 +32,8 @@ export default function Button({
   isSquare?: boolean;
   isRounded?: boolean;
 }) {
+  const defaultClassName =
+    "rounded-md text-white font-medium cursor-pointer hover:brightness-90 transition-all inline-flex items-center justify-center gap-x-1.5";
   const disabledClassName =
     "disabled:opacity-70 cursor-auto disabled:hover:brightness-100 dark:disabled:opacity-60";
   const square = "aspect-square! px-0!";
@@ -112,6 +114,7 @@ export default function Button({
       <Link
         href={href}
         className={cn(
+          defaultClassName,
           className,
           buttonVariant,
           buttonSize,
@@ -127,6 +130,7 @@ export default function Button({
   return (
     <button
       className={cn(
+        defaultClassName,
         className,
         buttonSize,
         buttonVariant,
