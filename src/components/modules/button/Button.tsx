@@ -115,13 +115,13 @@ export default function Button({
         href={href}
         className={cn(
           defaultClassName,
-          className,
           buttonVariant,
           buttonSize,
           isSquare && square,
           isRounded && rounded,
           disabled && disabledClassName,
           isLoading && isLoadingClassName,
+          className,
         )}>
         {children}
       </Link>
@@ -131,13 +131,13 @@ export default function Button({
     <button
       className={cn(
         defaultClassName,
-        className,
         buttonSize,
         buttonVariant,
         isSquare && square,
         isRounded && rounded,
         disabled && disabledClassName,
         isLoading && isLoadingClassName,
+        className,
       )}
       onClick={onClick}
       type={type}
