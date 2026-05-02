@@ -1,15 +1,15 @@
 # مستند ساختار پروژه
 
-این سند برای معرفی سریع و دقیق پروژه به توسعه‌دهنده، مدیر فنی یا هر فردی نوشته شده که می‌خواهد بدون جست‌وجوی زیاد بفهمد پروژه از چه بخش‌هایی تشکیل شده، هر فایل چه کاری انجام می‌دهد و برای توسعه‌ی قابلیت‌های جدید باید از کجا شروع کند.
+این فایل نقشه‌ی فنی پروژه است؛ اگر آن را به یک توسعه‌دهنده جدید بدهید، باید بتواند سریع بفهمد پروژه از چه بخش‌هایی ساخته شده، هر فایل چه مسئولیتی دارد و برای توسعه‌ی قابلیت جدید از کجا شروع کند.
 
 ## خلاصه پروژه
 
-- **نوع پروژه:** قالب آماده‌ی Next.js با App Router، TypeScript، React Query، Tailwind CSS و Storybook.
+- **نوع پروژه:** قالب آماده‌ی Next.js با App Router، TypeScript، React Query، Tailwind CSS v4 و Storybook.
 - **نسخه‌های اصلی فعلی:** `next@16.0.10`، `react@19.2.3`، `typescript@^5`، `tailwindcss@^4`، `@tanstack/react-query@^5.66.0`.
-- **جهت و زبان رابط کاربری:** فارسی، راست‌به‌چپ (`rtl`)، با فونت محلی ایران‌یکان.
-- **هدف پروژه:** فراهم‌کردن اسکلت اولیه برای ساخت اپلیکیشن‌های Next.js شامل سیستم تم، API client، کامپوننت‌های پایه، Storybook و ساختار قابل توسعه.
+- **زبان و جهت UI:** فارسی و راست‌به‌چپ (`rtl`) با فونت محلی IRANYekanX.
+- **هدف:** ایجاد اسکلت اولیه برای اپلیکیشن‌های مدرن Next.js شامل لایه API، مدیریت تم، کامپوننت‌های پایه، تقویم فارسی، Storybook و ساختار قابل توسعه.
 
-## اجرای پروژه
+## دستورات اصلی
 
 | دستور | کاربرد |
 | --- | --- |
@@ -24,225 +24,210 @@
 
 ```txt
 nextjs15-reactquery/
-├── .storybook/                  # تنظیمات Storybook و تست storyها
-├── public/                      # فایل‌های استاتیک: فونت، تصویر، SVG
+├── .storybook/                    # تنظیمات Storybook، preview و Vitest setup
+├── public/                        # فایل‌های استاتیک عمومی
+│   ├── fonts/                     # فونت‌های IRANYekanX
+│   ├── images/                    # تصاویر عمومی و placeholderها
+│   └── svg/                       # SVGهای عمومی
 ├── src/
-│   ├── app/                     # مسیرها و layoutهای Next.js App Router
-│   │   └── example-route/       # نمونه ساختار route-specific
-│   ├── components/              # کامپوننت‌های UI و ماژول‌های قابل استفاده مجدد
-│   │   └── modules/             # کامپوننت‌های عمومی سطح پروژه
-│   ├── config/                  # تنظیمات runtime مثل فونت‌ها
-│   ├── data/                    # داده‌های نمایشی/ثابت برای UI
-│   ├── hooks/                   # hookهای مشترک
-│   ├── lib/                     # utilityهای مشترک client/server
-│   ├── providers/               # Providerهای سراسری React
-│   ├── services/                # لایه API، Axios، query و mutation
-│   └── types/                   # typeهای مشترک و دامنه‌ای
-├── Dockerfile                   # build و اجرای کانتینری
-├── package.json                 # وابستگی‌ها و اسکریپت‌ها
-└── فایل‌های config ریشه         # Next, ESLint, Tailwind, TypeScript, Vitest, Prettier
+│   ├── app/                       # Next.js App Router
+│   │   └── example-route/         # نمونه ساختار route-specific
+│   ├── components/
+│   │   ├── ui/                    # primitiveهای reusable UI
+│   │   └── modules/               # feature moduleهای reusable
+│   ├── config/                    # تنظیمات runtime مثل فونت‌ها
+│   ├── data/                      # داده‌های ثابت/نمایشی
+│   ├── hooks/                     # hookهای مشترک
+│   ├── lib/                       # helperهای عمومی، API و number
+│   ├── providers/                 # Providerهای سراسری React
+│   ├── services/                  # Axios، API config و fetch سمت سرور
+│   └── types/                     # typeهای global
+├── AGENTS.md                      # قوانین توسعه برای agentها و توسعه‌دهنده‌ها
+├── PROJECT_STRUCTURE.md           # همین سند
+└── فایل‌های config ریشه           # Next, TS, ESLint, Tailwind, Vitest, Docker
 ```
 
-## مسیرهای اصلی و نقش آن‌ها
+## `src/app`
 
-### `src/app`
-
-محل تعریف routeها در معماری App Router است. هر فولدر داخل `app` می‌تواند یک مسیر مستقل باشد و منطق اختصاصی هر مسیر باید طبق ساختار `_components`، `_hooks` و `_types` در همان مسیر بماند.
+لایه routeهای Next.js App Router. هر route اگر کامپوننت، hook یا type اختصاصی دارد باید در همان route و داخل فولدرهای `_components`، `_hooks` و `_types` نگهداری شود.
 
 | مسیر | کاربرد |
 | --- | --- |
-| `src/app/layout.tsx` | layout اصلی پروژه؛ تنظیم `lang="fa"`، `dir="rtl"`، فونت ایران‌یکان، metadata و اتصال `Providers`. |
-| `src/app/page.tsx` | صفحه اصلی template؛ نمایش معرفی پروژه، قابلیت‌ها و dependencyها با `framer-motion`. |
-| `src/app/globals.css` | ورودی Tailwind v4، تعریف CSS variableها، tokenهای رنگ، breakpointها، scrollbar، select و loaderهای عمومی. |
+| `src/app/layout.tsx` | layout اصلی برنامه؛ تنظیم `lang="fa"`، `dir="rtl"`، metadata، فونت IRANYekanX و اتصال `Providers`. |
+| `src/app/page.tsx` | صفحه اصلی template؛ معرفی قابلیت‌ها و dependencyها با `framer-motion`. |
+| `src/app/globals.css` | ورودی Tailwind v4، تعریف color tokenها، breakpointها، utilityهای global، scrollbar، select و loader. |
 | `src/app/favicon.ico` | favicon اپلیکیشن. |
-| `src/app/example-route/page.tsx` | یک route نمونه برای نمایش الگوی ساخت مسیر جدید. |
-| `src/app/example-route/_components/example-component.tsx` | محل کامپوننت‌های مخصوص همان route. |
-| `src/app/example-route/_hooks/example-hook.ts` | محل hookهای مخصوص همان route. |
-| `src/app/example-route/_types/example-types.ts` | محل typeهای مخصوص همان route. |
+| `src/app/example-route/page.tsx` | route نمونه برای نشان‌دادن الگوی ساخت صفحه جدید. |
+| `src/app/example-route/_components/example-component.tsx` | محل کامپوننت‌های مخصوص `example-route`. |
+| `src/app/example-route/_hooks/example-hook.ts` | محل hookهای مخصوص `example-route`. |
+| `src/app/example-route/_types/example-types.ts` | محل typeهای مخصوص `example-route`. |
 
-### `src/providers`
+## `src/components`
 
-Providerهای سراسری که دور کل اپلیکیشن قرار می‌گیرند.
+محل کامپوننت‌های قابل استفاده مجدد. در نسخه فعلی پروژه، primitiveهای پایه به `src/components/ui` منتقل شده‌اند و feature moduleها در `src/components/modules` نگهداری می‌شوند.
 
-| فایل | کاربرد |
+### `src/components/ui`
+
+| مسیر | کاربرد |
 | --- | --- |
-| `src/providers/providers.tsx` | ترکیب `QueryClientProvider`، `ThemeProvider` و `Toaster`. تنظیم پیش‌فرض React Query برای جلوگیری از refetch هنگام focus شدن window. |
-| `src/providers/ThemeProvider.tsx` | wrapper ساده روی `next-themes` برای مدیریت کلاس `dark/light`. |
+| `src/components/ui/button/Button.tsx` | دکمه پایه با پشتیبانی از link، loading، سایز، variant رنگی و نوع‌های `solid/outline/ghost/glass`. |
+| `src/components/ui/button/Button.stories.tsx` | Storybook برای Button و نمایش حالت‌های مختلف آن. |
+| `src/components/ui/input/Input.tsx` | input پایه با label، error، password toggle، تبدیل اعداد فارسی به انگلیسی و حالت currency. |
+| `src/components/ui/input/Input.stories.tsx` | Storybook برای Input، فرم نمونه و validation. |
+| `src/components/ui/textarea/Textarea.tsx` | textarea پایه با label، error، سایز، حالت filled/outline و auto-resize. |
+| `src/components/ui/textarea/Textarea.stories.tsx` | Storybook برای Textarea و حالت‌های controlled/auto-resize/error. |
+| `src/components/ui/modal/Modal.tsx` | modal عمومی با `createPortal`، مدیریت overflow صفحه، header، close button و submit فرم. |
+| `src/components/ui/NavLink.tsx` | لینک هوشمند Next.js که بر اساس pathname و در صورت نیاز query string کلاس `active` می‌گیرد. |
+| `src/components/ui/loaders/Spinner.tsx` | spinner ساده با Tailwind و CSS مکمل. |
+| `src/components/ui/loaders/Spinner.css` | استایل مکمل Spinner. |
+| `src/components/ui/loaders/Loader.tsx` | loader سه‌نقطه‌ای مبتنی بر کلاس global `.loader`. |
 
-### `src/services`
+### `src/components/modules`
 
-لایه ارتباط با API و الگوی React Query در این بخش قرار دارد.
-
-| فایل/مسیر | کاربرد |
+| مسیر | کاربرد |
 | --- | --- |
-| `src/services/api-config.ts` | تعریف `API_LIST` شامل `baseURL` و endpointها؛ همچنین آبجکت `api` برای متدهای دامنه‌ای مثل auth login و refresh token. |
-| `src/services/axios-client.ts` | ساخت Axios instance، افزودن access token از cookie، مدیریت refresh token در خطای `401`، helperهای عمومی `get/post/put/patch/delete`. |
-| `src/services/server-api.ts` | wrapper برای `fetch` سمت سرور با افزودن token از cookie و متدهای `serverApi`. |
-| `src/services/queries/auth/useUserInfo.ts` | نمونه hook از نوع `useQuery` برای گرفتن اطلاعات کاربر؛ فعلاً بدنه API اصلی کامنت شده است. |
-| `src/services/mutations/auth/useAuthMutation.ts` | نمونه hook از نوع `useMutation` برای login؛ فعلاً بدنه API اصلی کامنت شده است. |
-
-### `src/components`
-
-کامپوننت‌های قابل استفاده مجدد پروژه. طبق قوانین پروژه، primitiveهای واقعاً مشترک باید در `src/components/ui`، کامپوننت‌های business-level در `src/components/app` و feature moduleهای عمومی در `src/components/modules` باشند. در وضعیت فعلی، فولدرهای `ui` و `app` هنوز ساخته نشده‌اند و کامپوننت‌های موجود عمدتاً در `modules` هستند.
-
-| فایل/مسیر | کاربرد |
-| --- | --- |
-| `src/components/Icons.tsx` | لایه آیکون‌های اختصاصی SVG/FontAwesome abstraction؛ فعلاً شامل `IEye` و `IEyeOff` و نمونه کامنت‌شده است. |
-| `src/components/modules/ThemeToggle.tsx` | دکمه تغییر تم با `next-themes` و آیکون‌های `lucide-react`. |
-| `src/components/modules/NavLink.tsx` | لینک هوشمند Next.js که بر اساس pathname و در صورت نیاز query string کلاس `active` می‌گیرد. |
-| `src/components/modules/button/Button.tsx` | دکمه reusable با حالت link، loading، سایز، variant رنگی و نوع‌های `solid/outline/ghost/glass`. |
-| `src/components/modules/button/Button.stories.tsx` | مستندات و سناریوهای Storybook برای Button. |
-| `src/components/modules/input/Input.tsx` | input reusable با label، error، password toggle، تبدیل اعداد فارسی به انگلیسی و حالت currency. |
-| `src/components/modules/input/Input.stories.tsx` | سناریوهای Storybook برای Input، فرم نمونه و validation. |
-| `src/components/modules/textarea/Textarea.tsx` | textarea reusable با label، error، سایز، حالت filled/outline و auto-resize. |
-| `src/components/modules/textarea/Textarea.stories.tsx` | مستندات و سناریوهای Storybook برای Textarea. |
-| `src/components/modules/modal/Modal.tsx` | modal عمومی با portal، بستن overflow صفحه، header، close button و پشتیبانی از submit فرم. |
-| `src/components/modules/loaders/Spinner.tsx` | spinner ساده مبتنی بر Tailwind و `Spinner.css`. |
-| `src/components/modules/loaders/Spinner.css` | کلاس CSS مکمل spinner. |
-| `src/components/modules/loaders/Loader.tsx` | loader سه‌نقطه‌ای که از کلاس‌های global در `globals.css` استفاده می‌کند. |
+| `src/components/modules/ThemeToggle.tsx` | تغییر تم dark/light با `next-themes` و آیکون‌های `lucide-react`. |
+| `src/components/modules/calendar/*` | ماژول کامل تقویم فارسی برای انتخاب تاریخ، بازه و زمان. |
 
 ### `src/components/modules/calendar`
 
-یک ماژول کامل تقویم فارسی برای انتخاب تاریخ و بازه تاریخی است. این ماژول از `react-multi-date-picker`، تقویم Persian و تبدیل timezone تهران استفاده می‌کند.
-
 | فایل | کاربرد |
 | --- | --- |
-| `CalendarModal.tsx` | کامپوننت اصلی modal تقویم؛ مدیریت state تاریخ شروع/پایان، حالت range، time picker، تایید و خروجی ISO. |
+| `CalendarModal.tsx` | کامپوننت اصلی modal تقویم؛ مدیریت state تاریخ شروع/پایان، range mode، time picker و خروجی ISO. |
 | `CalendarHeader.tsx` | header تقویم و کنترل حرکت بین ماه‌ها. |
 | `CalendarGrid.tsx` | رندر شبکه روزهای یک ماه. |
-| `CalendarDay.tsx` | رندر و منطق هر روز: امروز، روز غیرفعال، انتخاب‌شده، بازه و تعطیل. |
-| `QuickDatePresets.tsx` | presetهای انتخاب سریع مثل یک ماه، سه ماه، شش ماه و یک سال آینده. |
-| `TimePicker.tsx` | انتخاب ساعت و دقیقه با input و کنترل‌های افزایش/کاهش. |
-| `SelectedDateDisplay.tsx` | نمایش تاریخ یا بازه انتخاب‌شده به کاربر. |
+| `CalendarDay.tsx` | منطق و UI هر روز شامل امروز، گذشته، انتخاب‌شده، بازه و تعطیلی. |
+| `QuickDatePresets.tsx` | انتخاب سریع تاریخ‌های آینده مثل یک ماه، سه ماه، شش ماه و یک سال. |
+| `TimePicker.tsx` | انتخاب ساعت و دقیقه با input و دکمه‌های افزایش/کاهش. |
+| `SelectedDateDisplay.tsx` | نمایش تاریخ یا بازه انتخاب‌شده. |
 | `CalendarActions.tsx` | دکمه‌های تایید و انصراف. |
 | `calendarUtils.ts` | تولید روزهای تقویم، تشخیص امروز/ماه جاری/تعطیلی و تبدیل تاریخ شمسی به ISO با timezone تهران. |
-| `timezone-utils.ts` | helperهای تبدیل UTC و timezone تهران. |
-| `index.ts` | export متمرکز کامپوننت‌ها و utilityهای تقویم. |
-| `CalendarModal.stories.tsx` | سناریوهای Storybook برای تقویم: تک‌تاریخ، بازه و انتخاب زمان. |
+| `timezone-utils.ts` | helperهای تبدیل UTC و Tehran timezone. |
+| `index.ts` | export متمرکز ماژول تقویم. |
+| `CalendarModal.stories.tsx` | Storybook برای حالت تک‌تاریخ، بازه و انتخاب زمان. |
 
-### `src/hooks`
-
-hookهای مشترک و قابل استفاده در چند بخش پروژه.
+### آیکون‌ها
 
 | فایل | کاربرد |
 | --- | --- |
-| `src/hooks/useSearchQueries.tsx` | تغییر query stringهای URL با `next/navigation` بدون ساخت دستی URL. |
-| `src/hooks/useScrollEvent.ts` | تشخیص section فعال هنگام scroll با خواندن `section`های صفحه. |
+| `src/components/Icons.tsx` | محل آیکون‌های اختصاصی SVG/FontAwesome abstraction؛ فعلاً شامل `IEye` و `IEyeOff` است. |
 
-### `src/lib`
+## `src/providers`
 
-utilityهای عمومی پروژه.
-
-| فایل | کاربرد |
-| --- | --- |
-| `src/lib/utils.tsx` | شامل `cn` برای ادغام classNameها، helperهای فایل، عدد، نام کامل کاربر، error API، logout و ساخت URLهای API. |
-| `src/lib/server-utils.ts` | توابع server action برای `setCookie`، `removeCookie` و `getCookie` با `next/headers`. |
-
-### `src/types` و `src/enums.ts`
-
-تعریف typeها و enumهای مشترک. در حال حاضر بخشی از فایل‌ها placeholder هستند و پروژه برای دامنه‌های واقعی آینده آماده شده است.
-
-| فایل/مسیر | کاربرد |
-| --- | --- |
-| `src/types/api.types.ts` | typeهای عمومی API؛ فعلاً فایل خالی/آماده توسعه است. |
-| `src/types/types.ts` | محل typeهای global؛ فعلاً فایل خالی/آماده توسعه است. |
-| `src/types/client/auth/types.ts` | type پاسخ اطلاعات کاربر (`TUserInfoResponse`). |
-| `src/types/admin/placeholder.md` | placeholder برای typeهای بخش admin. |
-| `src/enums.ts` | محل enumهای global؛ فعلاً آماده توسعه است. |
-
-### `src/config` و `src/data`
+Providerهای سراسری که در `layout.tsx` دور کل اپلیکیشن قرار می‌گیرند.
 
 | فایل | کاربرد |
 | --- | --- |
-| `src/config/fonts.ts` | تعریف فونت محلی `FIranYekan` با weightهای مختلف و variable CSS. |
-| `src/data/index-data.tsx` | داده‌های نمایشی صفحه اصلی: لیست قابلیت‌ها و dependencyها. |
+| `src/providers/providers.tsx` | ترکیب `QueryClientProvider`، `ThemeProvider` و `Toaster`. تنظیم React Query با `refetchOnWindowFocus: false`. |
+| `src/providers/ThemeProvider.tsx` | wrapper روی `next-themes` برای مدیریت کلاس `dark/light`. |
 
-### `public`
+## `src/services`
 
-فایل‌های عمومی که مستقیماً توسط مرورگر قابل دسترسی هستند.
+لایه ارتباط با API و abstractionهای request.
+
+| فایل | کاربرد |
+| --- | --- |
+| `src/services/api-config.ts` | تعریف `API_LIST`، `baseURL` و endpointها؛ همچنین آبجکت `api` برای متدهای دامنه‌ای مثل auth login و refresh token. |
+| `src/services/axios-client.ts` | ساخت Axios instance، خواندن access token از cookie، افزودن Authorization header، refresh token در خطای `401` و export متدهای `apiService`. |
+| `src/services/server-api.ts` | wrapper سمت سرور برای `fetch` با token cookie و متدهای `serverApi`. |
+
+> نکته: در وضعیت فعلی فولدرهای `queries` و `mutations` در پروژه وجود ندارند. اگر React Query hook جدید اضافه شد، مطابق قرارداد `AGENTS.md` زیر `src/services/queries` یا `src/services/mutations` ساخته شود.
+
+## `src/lib`
+
+helperهای عمومی پروژه در این فولدر هستند و اخیراً بخشی از helperها از `utils.tsx` جدا شده‌اند.
+
+| فایل | کاربرد |
+| --- | --- |
+| `src/lib/utils.tsx` | helperهای عمومی UI/app مثل `cn`، تبدیل URL به File، shuffle، نام کامل کاربر، type guard فایل، `rgbaToHex`، حذف duplicate، زمان باقی‌مانده و logout. |
+| `src/lib/api.ts` | helperهای مربوط به API: `handleApiError`، ساخت base URL، query string، URL همراه query و حذف origin از URL. |
+| `src/lib/number.ts` | helperهای عددی: تبدیل اعداد فارسی/عربی به انگلیسی، format عدد و حذف جداکننده. |
+| `src/lib/server-utils.ts` | server actionهای cookie شامل `setCookie`، `removeCookie` و `getCookie` با `next/headers`. |
+
+## `src/hooks`
+
+hookهای shared که به route خاصی وابسته نیستند.
+
+| فایل | کاربرد |
+| --- | --- |
+| `src/hooks/useSearchQueries.tsx` | تغییر query stringهای URL با `next/navigation`. |
+| `src/hooks/useScrollEvent.ts` | تشخیص section فعال هنگام scroll. |
+| `src/hooks/useIsClient.tsx` | تشخیص client بودن render با `useSyncExternalStore` برای جلوگیری از mismatchهای SSR/client. |
+
+## `src/config` و `src/data`
+
+| فایل | کاربرد |
+| --- | --- |
+| `src/config/fonts.ts` | تعریف فونت محلی `FIranYekan` با weightهای مختلف و CSS variable. |
+| `src/data/index-data.tsx` | داده‌های نمایشی صفحه اصلی شامل `features` و `dependencies`. |
+
+## `src/types` و `src/enums.ts`
+
+| فایل | کاربرد |
+| --- | --- |
+| `src/types/types.ts` | محل typeهای global و shared پروژه؛ فعلاً آماده توسعه است. |
+| `src/enums.ts` | محل enumهای global و shared؛ فعلاً آماده توسعه است. |
+
+## `public`
 
 | مسیر | کاربرد |
 | --- | --- |
-| `public/fonts/*.woff2` | وزن‌های مختلف فونت IRANYekanX برای استفاده در `next/font/local`. |
+| `public/fonts/*.woff2` | وزن‌های مختلف فونت IRANYekanX برای `next/font/local`. |
 | `public/images/logo.png` | لوگوی پروژه/برند. |
 | `public/images/avatar.jpg` | تصویر نمونه avatar. |
 | `public/images/profile-placeholder.jpg` | placeholder تصویر پروفایل. |
 | `public/images/image-placeholder.jpg` | placeholder عمومی تصویر. |
-| `public/images/auth-background-image.jpg` | تصویر پس‌زمینه احتمالی صفحات احراز هویت. |
+| `public/images/auth-background-image.jpg` | تصویر پس‌زمینه احتمالی صفحات auth. |
 | `public/svg/image-placeholder.svg` | placeholder تصویر به فرمت SVG. |
 
-### `.storybook`
-
-تنظیمات توسعه، مستندسازی و تست کامپوننت‌ها.
+## `.storybook`
 
 | فایل | کاربرد |
 | --- | --- |
-| `.storybook/main.ts` | تنظیم Storybook با `@storybook/nextjs-vite`، addonها و مسیر storyها. |
-| `.storybook/preview.tsx` | import کردن `globals.css`، تنظیم a11y، decorator فارسی/RTL و فونت. |
-| `.storybook/storybook-fonts.css` | CSS اختصاصی فونت‌ها برای محیط Storybook. |
+| `.storybook/main.ts` | تنظیم Storybook با `@storybook/nextjs-vite`، addonها، مسیر storyها و static dir. |
+| `.storybook/preview.tsx` | import کردن global styleها، تنظیم a11y و decorator فارسی/RTL. |
+| `.storybook/storybook-fonts.css` | CSS اختصاصی فونت‌ها در Storybook. |
 | `.storybook/vitest.setup.ts` | اتصال annotationهای Storybook و a11y برای تست با Vitest. |
 
-## فایل‌های تنظیمات ریشه
+## فایل‌های config ریشه
 
 | فایل | کاربرد |
 | --- | --- |
-| `package.json` | نام پروژه، اسکریپت‌ها، dependencyها و devDependencyها. |
-| `pnpm-lock.yaml` | قفل نسخه‌های dependency برای نصب پایدار با pnpm. |
-| `next.config.ts` | تنظیمات Next.js؛ در حال حاضر `reactCompiler: true` فعال است. |
-| `tsconfig.json` | تنظیمات TypeScript، strict mode، alias `@/*` به `src/*`. |
-| `tailwind.config.ts` | تنظیم Tailwind؛ dark mode با کلاس و fontFamily ایران‌یکان. |
-| `postcss.config.mjs` | اتصال پلاگین `@tailwindcss/postcss`. |
-| `eslint.config.mjs` | کانفیگ ESLint برای Next، TypeScript و Storybook همراه با ruleهای سفارشی. |
-| `vitest.config.ts` | تنظیم Vitest برای اجرای تست storyها با Playwright/Chromium. |
-| `vitest.shims.d.ts` | reference typeهای browser-playwright برای Vitest. |
-| `Dockerfile` | build دو مرحله‌ای Node 20 برای ساخت و اجرای production روی پورت `3001`. |
-| `.editorconfig` | یکسان‌سازی indentation، line ending و charset بین editorها. |
-| `.prettierrc` | تنظیم Prettier و مرتب‌سازی کلاس‌های Tailwind با `prettier-plugin-tailwindcss`. |
-| `.gitignore` | حذف dependencyها، خروجی build، envها، coverage و فایل‌های موقت از git. |
-| `README.md` | معرفی template و راهنمای کلی؛ در وضعیت فعلی بخشی از متن فارسی آن با encoding خراب نمایش داده می‌شود. |
-| `AGENTS.md` | قوانین اجباری معماری، styling، محل قرارگیری فایل‌ها و قراردادهای توسعه برای agentها/توسعه‌دهنده‌ها. |
-| `next-env.d.ts` | فایل تولیدی Next.js برای typeهای محیطی؛ نباید دستی ویرایش شود. |
+| `package.json` | dependencyها، devDependencyها و scriptهای پروژه. |
+| `pnpm-lock.yaml` | قفل نسخه dependencyها برای نصب پایدار با pnpm. |
+| `next.config.ts` | تنظیمات Next.js؛ فعلاً `reactCompiler: true` فعال است. |
+| `tsconfig.json` | تنظیمات TypeScript، strict mode و alias `@/*` به `src/*`. |
+| `tailwind.config.ts` | تنظیم dark mode با class و font family ایران‌یکان. |
+| `postcss.config.mjs` | اتصال `@tailwindcss/postcss`. |
+| `eslint.config.mjs` | تنظیم ESLint برای Next، TypeScript و Storybook. |
+| `vitest.config.ts` | تنظیم Vitest برای تست storyها با Playwright/Chromium. |
+| `vitest.shims.d.ts` | type reference برای Vitest browser/playwright. |
+| `Dockerfile` | build دو مرحله‌ای Node 20 و اجرای production روی پورت `3001`. |
+| `.editorconfig` | یکسان‌سازی indentation، line ending و charset. |
+| `.prettierrc` | تنظیم Prettier و مرتب‌سازی کلاس‌های Tailwind. |
+| `.gitignore` | حذف dependencyها، خروجی build، envها و فایل‌های موقت از git. |
+| `README.md` | معرفی template و راهنمای عمومی پروژه. |
+| `AGENTS.md` | قوانین توسعه و معماری برای agentها و توسعه‌دهنده‌ها. |
 
-## جریان داده و API
+## جریان اجرای UI
 
-1. `src/app/layout.tsx` کل برنامه را داخل `Providers` قرار می‌دهد.
-2. `Providers`، `QueryClientProvider` را برای React Query و `ThemeProvider` را برای dark/light theme فعال می‌کند.
-3. کامپوننت‌ها یا hookها برای درخواست‌های client-side از `api` یا `apiService` در `src/services` استفاده می‌کنند.
-4. `axios-client.ts` قبل از هر request، `accessToken` را از cookie می‌خواند و در header می‌گذارد.
-5. اگر پاسخ `401` باشد، تلاش می‌کند با `refreshToken` توکن جدید بگیرد و request قبلی را تکرار کند.
-6. برای requestهای server-side می‌توان از `serverApi` در `src/services/server-api.ts` استفاده کرد.
+1. `src/app/layout.tsx` روی `html` جهت `rtl` و زبان `fa` تنظیم می‌کند.
+2. فونت `FIranYekan` از `src/config/fonts.ts` روی `body` اعمال می‌شود.
+3. `Providers` کل اپلیکیشن را داخل React Query، Theme Provider و Toaster قرار می‌دهد.
+4. صفحه اصلی از `src/data/index-data.tsx` داده می‌گیرد و با `ThemeToggle` و `framer-motion` رندر می‌شود.
 
-## قراردادهای توسعه در این پروژه
+## جریان API
 
-- برای ترکیب کلاس‌ها همیشه از `cn` در `src/lib/utils.tsx` استفاده شود.
-- رنگ‌ها باید از tokenهای Tailwind/CSS موجود در `src/app/globals.css` بیایند، نه مقدار خام داخل کامپوننت.
-- logic مخصوص route در خود route و داخل `_components`، `_hooks` و `_types` نگه داشته شود.
-- hookهای مشترک در `src/hooks` قرار می‌گیرند.
-- utilityهای مشترک در `src/utils` یا طبق ساختار فعلی در `src/lib` قرار می‌گیرند؛ قبل از اضافه‌کردن helper جدید باید موارد موجود بررسی شوند.
-- API typeهای route/domain بهتر است نزدیک همان domain قرار بگیرند.
-- primitiveهای UI مشترک در آینده باید در `src/components/ui` ساخته شوند؛ کامپوننت‌های business-level در `src/components/app` و ماژول‌های feature-level در `src/components/modules`.
-- آیکون‌های اختصاصی ابتدا باید در `src/components/Icons.tsx` اضافه شوند و در صورت نبودن، از `lucide-react` استفاده شود.
-
-## فایل‌ها و پوشه‌هایی که معمولاً نباید دستی ویرایش شوند
-
-| مسیر | دلیل |
-| --- | --- |
-| `node_modules/` | dependencyهای نصب‌شده؛ با package manager مدیریت می‌شود. |
-| `.next/` | خروجی build/dev Next.js؛ تولیدی است. |
-| `next-env.d.ts` | توسط Next.js تولید و به‌روزرسانی می‌شود. |
-| `pnpm-lock.yaml` | فقط هنگام تغییر dependency یا نصب مجدد باید تغییر کند. |
+1. endpointها در `src/services/api-config.ts` تعریف می‌شوند.
+2. درخواست‌های client-side از `apiService` در `src/services/axios-client.ts` استفاده می‌کنند.
+3. `axios-client.ts` access token را از cookie می‌گیرد و در header می‌گذارد.
+4. در خطای `401`، refresh token endpoint صدا زده می‌شود و request اصلی retry می‌شود.
+5. درخواست‌های server-side از `serverApi` در `src/services/server-api.ts` استفاده می‌کنند.
+6. helperهای ساخت URL و error handling در `src/lib/api.ts` قرار دارند.
 
 ## مسیر پیشنهادی برای توسعه قابلیت جدید
 
-### اگر قابلیت یک صفحه مستقل است
-
-1. یک فولدر جدید در `src/app` بسازید.
-2. فایل `page.tsx` را برای route ایجاد کنید.
-3. کامپوننت‌های مخصوص همان صفحه را در `_components` بگذارید.
-4. hookهای مخصوص همان صفحه را در `_hooks` بگذارید.
-5. typeهای مخصوص همان صفحه را در `_types` بگذارید.
-
-نمونه:
+### قابلیت route-specific
 
 ```txt
 src/app/dashboard/
@@ -252,18 +237,21 @@ src/app/dashboard/
 └── _types/
 ```
 
-### اگر قابلیت reusable است
+- کامپوننت، hook و type فقط همان route باید داخل همان route بماند.
+- اگر بعداً در چند route استفاده شد، آن را به محل shared مناسب منتقل کنید.
 
-- کامپوننت UI عمومی: `src/components/ui`
-- کامپوننت یا feature module قابل استفاده در چند جا: `src/components/modules`
+### قابلیت reusable
+
+- primitive عمومی UI: `src/components/ui`
+- feature module قابل استفاده در چند بخش: `src/components/modules`
 - hook مشترک: `src/hooks`
-- API query/mutation: `src/services/queries` یا `src/services/mutations`
-- type مشترک: `src/types` یا فایل نزدیک domain مربوطه
+- helper عمومی: `src/lib`
+- API config و request layer: `src/services`
+- type و enum مشترک: `src/types/types.ts` و `src/enums.ts`
 
-## نکات قابل توجه فعلی
+## نکات مهم وضعیت فعلی
 
-- نام فولدر پروژه `nextjs15-reactquery` است، اما dependency فعلی پروژه Next.js نسخه `16.0.10` را استفاده می‌کند.
-- بعضی متن‌های فارسی در `README.md` و برخی فایل‌های story/component به‌صورت mojibake دیده می‌شوند؛ احتمالاً در گذشته با encoding نادرست ذخیره یا خوانده شده‌اند.
-- در `src/app/page.tsx` چند کلاس رنگی خام Tailwind مثل `blue-500` و `gray-900` دیده می‌شود؛ طبق قوانین فعلی پروژه، برای توسعه‌های بعدی بهتر است از tokenهای تعریف‌شده در `globals.css` استفاده شود.
-- `src/services/queries/auth/useUserInfo.ts` و `src/services/mutations/auth/useAuthMutation.ts` بیشتر نقش نمونه/اسکلت دارند و منطق اصلی API آن‌ها کامنت شده است.
-- پوشه‌های استاندارد `src/components/ui` و `src/components/app` هنوز در پروژه وجود ندارند و هنگام نیاز باید طبق قرارداد ساخته شوند.
+- نام فولدر پروژه `nextjs15-reactquery` است، اما نسخه فعلی Next.js در `package.json` برابر `16.0.10` است.
+- برخی متن‌های فارسی داخل فایل‌های قدیمی README، story و component به صورت mojibake دیده می‌شوند؛ اگر همان فایل‌ها تغییر کردند بهتر است encoding/متن فارسی‌شان هم اصلاح شود.
+- چند کامپوننت قدیمی هنوز از رنگ‌های خام Tailwind مثل `gray`، `blue` و `purple` استفاده می‌کنند؛ برای کدهای جدید یا فایل‌های touched بهتر است طبق `AGENTS.md` از tokenهای پروژه در `globals.css` استفاده شود.
+- Storybook برای `Button`، `Input`، `Textarea` و `CalendarModal` وجود دارد و بهترین محل بررسی visual stateهای این primitiveهاست.
