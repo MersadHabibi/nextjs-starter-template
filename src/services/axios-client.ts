@@ -1,11 +1,11 @@
 import { getCookie } from "@/lib/server-utils";
-import { buildUrlWithQuery } from "@/lib/utils";
 import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
 import { API_LIST } from "./api-config";
+import { buildUrlWithQuery } from "@/lib/api";
 
 // Token cache for client-side
 let accessTokenCache: string | null = null;
