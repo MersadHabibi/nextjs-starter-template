@@ -1,5 +1,5 @@
+import { buildUrlWithQuery } from "@/lib/api";
 import { getCookie } from "@/lib/server-utils";
-import { buildUrlWithQuery } from "@/lib/utils";
 
 // Server-side fetch wrapper with authentication
 export async function serverFetch<T>(
